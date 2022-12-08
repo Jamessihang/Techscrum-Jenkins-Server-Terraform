@@ -1,7 +1,7 @@
 # configured aws provider with proper credentials
 provider "aws" {
-  region    = "us-east-1"
-  profile   = "terraform-user"
+  region    = "ap-southeast-2"
+  profile   = "SIHANG"
 }
 
 
@@ -29,38 +29,38 @@ resource "aws_default_subnet" "default_az1" {
 
 
 # create security group for the ec2 instance
-resource "aws_security_group" "ec2_security_group" {
-  name        = "ec2 security group"
+resource "aws_security_group" "jenkins_security_group" {
+  name        = "jenkins security group"
   description = "allow access on ports 8080 and 22"
-  vpc_id      = 
+  vpc_id      = aws_default_vpc.default_vpc.id
 
   # allow access on port 8080
   ingress {
     description      = "http proxy access"
-    from_port        = 
-    to_port          = 
-    protocol         = 
-    cidr_blocks      = 
+    from_port        = 8080
+    to_port          = 8080
+    protocol         = "tcp"
+    cidr_blocks      = ["0.0.0.0/0"]
   }
 
   # allow access on port 22
   ingress {
     description      = "ssh access"
-    from_port        = 
-    to_port          = 
-    protocol         = 
-    cidr_blocks      = 
+    from_port        = 22
+    to_port          = 22
+    protocol         = "tcp"
+    cidr_blocks      = ["0.0.0.0/0"]
   }
 
   egress {
-    from_port        = 
-    to_port          = 
-    protocol         = 
-    cidr_blocks      = 
+    from_port        = 0
+    to_port          = 0
+    protocol         = -1
+    cidr_blocks      = ["0.0.0.0/0"]
   }
 
   tags   = {
-    Name = "jenkins server security group"
+    Name = "Techscrum Jenkins server security group"
   }
 }
 
@@ -84,15 +84,15 @@ data "aws_ami" "amazon_linux_2" {
 
 # launch the ec2 instance and install website
 resource "aws_instance" "ec2_instance" {
-  ami                    = 
-  instance_type          = 
-  subnet_id              = 
-  vpc_security_group_ids = 
-  key_name               = 
+  ami                    = data.aws_ami.amazon_linux_2.id
+  instance_type          = "t2.micro"
+  subnet_id              = aws_default_subnet.default_az1.id
+  vpc_security_group_ids = [aws_security_group.jenkins_security_group.id]
+  key_name               = "Jenkins_key"
   # user_data            = file("install_jenkins.sh")
 
   tags = {
-    Name = 
+    Name = "Techscrum Jenkins Server"
   }
 }
 
@@ -102,26 +102,28 @@ resource "null_resource" "name" {
 
   # ssh into the ec2 instance 
   connection {
-    type        = 
-    user        = 
-    private_key = file()
-    host        = 
+    type        = "ssh"
+    user        = "ec2-user"
+    private_key = file("~/Downloads/Jenkins_key.pem")
+    host        = aws_instance.ec2_instance.public_ip
   }
 
   # copy the install_jenkins.sh file from your computer to the ec2 instance 
   provisioner "file" {
-    source      = 
-    destination = 
+    source      = "install_jenkins.sh"
+    destination = "/tmp/install_jenkins.sh"
   }
 
   # set permissions and run the install_jenkins.sh file
   provisioner "remote-exec" {
     inline = [
+      "sudo chmod +x /tmp/install_jenkins.sh",
+      "sh /tmp/install_jenkins.sh",
     ]
   }
 
   # wait for ec2 to be created
-  depends_on = []
+  depends_on = [aws_instance.ec2_instance]
 }
 
 
