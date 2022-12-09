@@ -64,6 +64,33 @@ resource "aws_security_group" "jenkins_security_group" {
   }
 }
 
+resource "aws_internet_gateway" "jenkins_igw" {
+  vpc_id    = aws_default_vpc.default_vpc.id
+
+  tags      = {
+    Name    = "Jenkins igw"
+  }
+}
+
+# Create public route table 
+resource "aws_route_table" "jenkins_public_route_table" {
+  vpc_id       = aws_default_vpc.default_vpc.id
+
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = aws_internet_gateway.jenkins_igw.id
+  }
+
+  tags       = {
+    Name     = "Jenkins route table"
+  }
+}
+
+# Associate public subnets to public route table
+resource "aws_route_table_association" "jenkins_route_table_association" {
+  subnet_id           = aws_default_subnet.default_az1.id
+  route_table_id      = aws_route_table.jenkins_public_route_table.id
+}
 
 # use data source to get a registered amazon linux 2 ami
 data "aws_ami" "amazon_linux_2" {
@@ -110,15 +137,15 @@ resource "null_resource" "name" {
 
   # copy the install_jenkins.sh file from your computer to the ec2 instance 
   provisioner "file" {
-    source      = "install_jenkins.sh"
-    destination = "/tmp/install_jenkins.sh"
+    source      = "install_jenkins_git.sh"
+    destination = "/tmp/install_jenkins_git.sh"
   }
 
   # set permissions and run the install_jenkins.sh file
   provisioner "remote-exec" {
     inline = [
-      "sudo chmod +x /tmp/install_jenkins.sh",
-      "sh /tmp/install_jenkins.sh",
+      "sudo chmod +x /tmp/install_jenkins_git.sh",
+      "sh /tmp/install_jenkins_git.sh",
     ]
   }
 
