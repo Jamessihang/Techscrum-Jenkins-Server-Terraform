@@ -115,7 +115,6 @@ resource "aws_instance" "ec2_instance" {
   subnet_id              = aws_default_subnet.default_az1.id
   vpc_security_group_ids = [aws_security_group.jenkins_security_group.id]
   key_name               = "Jenkins_key"
-  iam_instance_profile = aws_iam_instance_profile.ec2_profile.name
   # user_data            = file("install_jenkins.sh")
 
   tags = {
