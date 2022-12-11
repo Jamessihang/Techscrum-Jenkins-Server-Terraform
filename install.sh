@@ -27,10 +27,6 @@ sudo yum -y install terraform
 sudo yum install git -y
 #Check git version
 git version
-#create a directory named employee
-mkdir mygit
-#get inside mygit directory
-cd mygit/
 #initialize git local repository
 git init
 
