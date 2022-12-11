@@ -5,12 +5,7 @@ sudo yum search docker
 #Get version information:
 sudo yum info docker
 #Install docker
-sudo yum install docker
-#Add group membership for the default ec2-user so you can run all docker commands without using the sudo command:
-sudo usermod -a -G docker ec2-user
-id ec2-user
-# Reload a Linux user's group assignments to docker w/o logout
-newgrp docker
+sudo yum install docker -y
 # If need docker-compose too:
 # 1. Get pip3 
 #sudo yum install python3-pip
