@@ -1,7 +1,7 @@
 # configured aws provider with proper credentials
 provider "aws" {
   region    = "ap-southeast-2"
-  provider  = "SIHANG"
+  profile   = "SIHANG"
 }
 
 
@@ -107,7 +107,6 @@ data "aws_ami" "amazon_linux_2" {
     values = ["amzn2-ami-hvm*"]
   }
 }
-
 
 # launch the ec2 instance
 resource "aws_instance" "ec2_instance" {
