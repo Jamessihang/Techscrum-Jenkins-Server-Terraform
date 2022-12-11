@@ -109,13 +109,14 @@ data "aws_ami" "amazon_linux_2" {
 }
 
 
-# launch the ec2 instance and install website
+# launch the ec2 instance
 resource "aws_instance" "ec2_instance" {
   ami                    = data.aws_ami.amazon_linux_2.id
   instance_type          = "t2.micro"
   subnet_id              = aws_default_subnet.default_az1.id
   vpc_security_group_ids = [aws_security_group.jenkins_security_group.id]
   key_name               = "Jenkins_key"
+  aws_iam_instance_profile = aws_iam_instance_profile.ec2_profile.name
   # user_data            = file("install_jenkins.sh")
 
   tags = {
@@ -123,6 +124,37 @@ resource "aws_instance" "ec2_instance" {
   }
 }
 
+#Create a role
+resource "aws_iam_role" "ec2_role" {
+  name = "ec2_role"
+
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Action = "sts:AssumeRole"
+        Effect = "Allow"
+        Sid    = ""
+        Principal = {
+          Service = "ec2.amazonaws.com"
+        }
+      },
+    ]
+  })
+}
+
+#Attach role to policy
+resource "aws_iam_policy_attachment" "ec2_policy_role" {
+  name       = "ec2_attachment"
+  roles      = [aws_iam_role.ec2_role.name]
+  policy_arn = arn:aws:iam::aws:policy/AdministratorAccess
+}
+
+#Attach role to an instance profile
+resource "aws_iam_instance_profile" "ec2_profile" {
+  name = "ec2_profile"
+  role = aws_iam_role.ec2_role.name
+}
 
 # an empty resource block
 resource "null_resource" "name" {
@@ -135,13 +167,13 @@ resource "null_resource" "name" {
     host        = aws_instance.ec2_instance.public_ip
   }
 
-  # copy the install_jenkins.sh file from your computer to the ec2 instance 
+  # copy the install.sh file from your computer to the ec2 instance 
   provisioner "file" {
     source      = "install.sh"
     destination = "/tmp/install.sh"
   }
 
-  # set permissions and run the install_jenkins.sh file
+  # set permissions and run the install.sh file
   provisioner "remote-exec" {
     inline = [
       "sudo chmod +x /tmp/install.sh",
