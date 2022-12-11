@@ -116,7 +116,7 @@ resource "aws_instance" "ec2_instance" {
   subnet_id              = aws_default_subnet.default_az1.id
   vpc_security_group_ids = [aws_security_group.jenkins_security_group.id]
   key_name               = "Jenkins_key"
-  aws_iam_instance_profile = aws_iam_instance_profile.ec2_profile.name
+  iam_instance_profile = aws_iam_instance_profile.ec2_profile.name
   # user_data            = file("install_jenkins.sh")
 
   tags = {
@@ -143,11 +143,16 @@ resource "aws_iam_role" "ec2_role" {
   })
 }
 
+#Get ploicy information
+data "aws_iam_policy" "ec2" {
+  arn = "arn:aws:iam::aws:policy/AdministratorAccess"
+}
+
 #Attach role to policy
 resource "aws_iam_policy_attachment" "ec2_policy_role" {
   name       = "ec2_attachment"
   roles      = [aws_iam_role.ec2_role.name]
-  policy_arn = arn:aws:iam::aws:policy/AdministratorAccess
+  policy_arn = data.aws_iam_policy.ec2.arn
 }
 
 #Attach role to an instance profile
