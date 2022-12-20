@@ -8,9 +8,9 @@ sudo yum info docker
 sudo yum install docker -y
 # If need docker-compose too:
 # 1. Get pip3 
-#sudo yum install python3-pip
+sudo yum install python3-pip
  # 2. Then run any one of the following
-#sudo pip3 install docker-compose # with root access
+sudo pip3 install docker-compose # with root access
 #Enable docker service at AMI boot time:
 sudo systemctl enable docker.service
 #Start the Docker service:
