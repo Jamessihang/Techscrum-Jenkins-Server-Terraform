@@ -43,6 +43,15 @@ resource "aws_security_group" "jenkins_security_group" {
     cidr_blocks      = ["0.0.0.0/0"]
   }
 
+  # allow access on port 9000
+  ingress {
+    description      = "http proxy access"
+    from_port        = 9000
+    to_port          = 9000
+    protocol         = "tcp"
+    cidr_blocks      = ["0.0.0.0/0"]
+  }
+
   # allow access on port 22
   ingress {
     description      = "ssh access"
@@ -109,9 +118,9 @@ data "aws_ami" "amazon_linux_2" {
 }
 
 # launch the ec2 instance
-resource "aws_instance" "ec2_instance" {
+resource "aws_instance" "jenkins_instance" {
   ami                    = data.aws_ami.amazon_linux_2.id
-  instance_type          = "t3.small"
+  instance_type          = "t2.small"
   subnet_id              = aws_default_subnet.default_az1.id
   vpc_security_group_ids = [aws_security_group.jenkins_security_group.id]
   key_name               = "Jenkins_key"
