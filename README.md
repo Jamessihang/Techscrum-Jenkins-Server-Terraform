@@ -1,4 +1,4 @@
-# Techscrum-Jenkins-Server-Terraform
+# Techscrum-Server
 Generate Servers with terraform
 
 How to use docker compose to generate a SonarQube Server
