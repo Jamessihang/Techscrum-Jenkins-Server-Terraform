@@ -1,0 +1,8 @@
+[jenkins-server]
+# private ipv4 address of jenkins server
+
+[terraform-server]
+# private ipv4 address of terraform server
+
+[sonarqube-server]
+# private ipv4 address of sonarqube server

@@ -1,5 +1,5 @@
 # Techscrum-Jenkins-Server-Terraform
-Generate Jenkins Server with terraform
+Generate Servers with terraform
 
 How to use docker compose to generate a SonarQube Server
 EC2 at least t2.small

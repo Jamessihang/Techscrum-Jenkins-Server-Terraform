@@ -1,0 +1,31 @@
+---
+- name: Install Docker
+  hosts: jenkins-server, sonarqube-server
+  become: yes
+  become_user: root
+  tasks:
+  - name: yum update
+    yum:
+      name: '*'
+      state: latest
+  
+  - name: yum install docker
+    yum:
+      name: docker
+      state: latest
+
+---
+- name: Install Docker-compose
+  hosts: sonarqube-server
+  become: yes
+  become_user: root
+  tasks:
+  - name: yum install pyhton3-pip
+    yum:
+      name: pip
+      state: latest
+
+  - name: Install docker compose
+    ansible.builtin.pip:
+      name: docker-compose
+      state: latest

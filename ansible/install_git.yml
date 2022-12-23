@@ -1,0 +1,9 @@
+- name: install git
+  hosts: jenkins-server, terraform server
+  become: yes
+  become_user: root
+  tasks:
+  - name: install git
+    ansible.builtin.apt:
+      name: git
+      state: latest
