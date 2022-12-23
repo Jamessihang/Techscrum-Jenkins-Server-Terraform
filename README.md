@@ -20,7 +20,7 @@ sudo usermod -aG docker $USER
 #Create docker-compose.yml
 sudo vi docker-compose.yml
 
-#Copy all the content in sonar-postgres.yml
+#Copy all the content in docker-compose.yml
 
 #Save the file :wq!
 
