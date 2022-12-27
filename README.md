@@ -2,7 +2,7 @@
 Use terraform code 
 
 # How to use docker compose to generate a SonarQube Server
-# EC2 at least t2.small
+# EC2 with Ubuntu ami at least t2.small
 # Port 9000 is open in security group
 
 sudo vi /etc/sysctl.conf
@@ -17,10 +17,10 @@ sudo sysctl -p
 # Add current user to docker group
 sudo usermod -aG docker $USER
 
-# Create docker-compose.yml
+# Create docker-compose.yml on EC2 instance
 sudo vi docker-compose.yml
 
-# Copy all the content in docker-compose.yml
+# Copy all the content in docker-compose.yml 
 
 # Save the file :wq!
 
