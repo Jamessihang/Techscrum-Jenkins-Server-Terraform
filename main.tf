@@ -27,6 +27,13 @@ resource "aws_default_subnet" "default_az1" {
   }
 }
 
+data "external" "my_ip" {
+  program = ["sh", "my_ip.sh" ]
+}
+
+output "commandout" {
+  value = "${data.external.my_ip.result}"
+}
 
 # create security group for the ec2 instance
 resource "aws_security_group" "jenkins_security_group" {
@@ -49,7 +56,7 @@ resource "aws_security_group" "jenkins_security_group" {
     from_port        = 22
     to_port          = 22
     protocol         = "tcp"
-    cidr_blocks      = ["0.0.0.0/0"]
+    cidr_blocks      = ["${data.external.my_ip.result}"]
   }
 
   egress {
@@ -85,7 +92,7 @@ resource "aws_security_group" "sonarqube_security_group" {
     from_port        = 22
     to_port          = 22
     protocol         = "tcp"
-    cidr_blocks      = ["0.0.0.0/0"]
+    cidr_blocks      = ["${data.external.my_ip.result}"]
   }
 
   egress {
@@ -112,7 +119,7 @@ resource "aws_security_group" "ansible_security_group" {
     from_port        = 22
     to_port          = 22
     protocol         = "tcp"
-    cidr_blocks      = ["0.0.0.0/0"]
+    cidr_blocks      = ["${data.external.my_ip.result}"]
   }
 
   egress {
