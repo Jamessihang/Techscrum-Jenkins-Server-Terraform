@@ -6,14 +6,14 @@ sudo apt install docker.io -y
 #Install Dependencies
 sudo snap install docker
 # Install docker-compose
-sudo curl -L "https://github.com/docker/compose/releases/download/1.29.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+#sudo curl -L "https://github.com/docker/compose/releases/download/1.29.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 # Change file mode
-sudo chmod +x /usr/local/bin/docker-compose
+#sudo chmod +x /usr/local/bin/docker-compose
 
 
 #Install trivy 
-wget https://github.com/aquasecurity/trivy/releases/download/v0.18.3/trivy_0.18.3_Linux-64bit.deb
-sudo dpkg -i trivy_0.18.3_Linux-64bit.deb
+#wget https://github.com/aquasecurity/trivy/releases/download/v0.18.3/trivy_0.18.3_Linux-64bit.deb
+#sudo dpkg -i trivy_0.18.3_Linux-64bit.deb
 
 
 #Install Jenkins
