@@ -28,7 +28,7 @@ sudo vi docker-compose.yml
 sudo docker-compose up -d
 
 # Make sure is up and running
-sudo docker-compose logs -follow
+sudo docker-compose logs --follow
 
 # Terminate the docker compose
 sudo docker-compose down
