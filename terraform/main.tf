@@ -104,7 +104,7 @@ resource "aws_route_table_association" "jenkins_route_table_association" {
 # launch the ec2 instance
 resource "aws_instance" "jenkins_instance" {
   ami                    = "ami-0df609f69029c9bdb"
-  instance_type          = "t2.micro"
+  instance_type          = "t3.small"
   subnet_id              = aws_default_subnet.default_az1.id
   vpc_security_group_ids = [aws_security_group.jenkins_security_group.id]
   key_name               = "Jenkins_key"
@@ -112,6 +112,19 @@ resource "aws_instance" "jenkins_instance" {
 
   tags = {
     Name = "Techscrum Jenkins Server"
+  }
+}
+
+resource "aws_instance" "sonarqube_instance" {
+  ami                    = "ami-0df609f69029c9bdb"
+  instance_type          = "t3.small"
+  subnet_id              = aws_default_subnet.default_az1.id
+  vpc_security_group_ids = [aws_security_group.jenkins_security_group.id]
+  key_name               = "Jenkins_key"
+  # user_data            = file("install_jenkins.sh")
+
+  tags = {
+    Name = "Techscrum SonarQube Server"
   }
 }
 
@@ -151,5 +164,5 @@ output "jenkins_url" {
 }
 
 output "sonarqb_url" {
-  value     = join ("", ["http://", aws_instance.jenkins_instance.public_dns, ":", "9000"])
+  value     = join ("", ["http://", aws_instance.sonarqube_instance.public_dns, ":", "9000"])
 }
