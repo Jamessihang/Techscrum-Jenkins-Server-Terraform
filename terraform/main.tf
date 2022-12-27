@@ -102,24 +102,24 @@ resource "aws_route_table_association" "jenkins_route_table_association" {
 }
 
 # use data source to get a registered amazon linux 2 ami
-data "aws_ami" "ub" {
+data "aws_ami" "amazon_linux_2" {
   most_recent = true
   owners      = ["amazon"]
   
   filter {
-    name   = "virtualization-type"
-    values = ["hvm"]
+    name   = "owner-alias"
+    values = ["amazon"]
   }
 
   filter {
-    name   = "image_id"
-    values = ["ami-0df609f69029c9bdb"]
+    name   = "name"
+    values = ["amzn2-ami-hvm*"]
   }
 }
 
 # launch the ec2 instance
 resource "aws_instance" "jenkins_instance" {
-  ami                    = data.aws_ami.ubuntu.id
+  ami                    = data.aws_ami.amazon_linux_2.id
   instance_type          = "t2.micro"
   subnet_id              = aws_default_subnet.default_az1.id
   vpc_security_group_ids = [aws_security_group.jenkins_security_group.id]
