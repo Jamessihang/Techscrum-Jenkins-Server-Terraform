@@ -37,7 +37,7 @@ docker-compose version
 # EC2 at least t2.small
 # Port 9000 is open in security group
 
-sudo vi/etc/sysctl.conf
+sudo vi etc/sysctl.conf
 
 # Add following to the bottom of that file
 vm.max_map_count=262144
