@@ -1,5 +1,5 @@
 # Techscrum-Server
-Generate Servers with terraform
+Use terraform code 
 
 # Update the installed packages and package cache on your instance.
 
