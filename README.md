@@ -1,5 +1,6 @@
 # Techscrum-Server
-Use terraform code 
+If you need one server for testing, you can Use terraform code in terraform folder.
+If you need to Terraform and Ansible to generate multiple instances, please use the terraform code in root directory.
 
 # How to use docker compose to generate a SonarQube Server
 # EC2 with Ubuntu ami at least t2.small
