@@ -1,0 +1,20 @@
+
+- name: install terraform
+  hosts: terraform-server
+  become: yes
+  become_user: root
+  tasks:
+  - name: yum install yum-utils
+    yum:
+      name: yum-utils
+      state: latest
+
+  - name: add repo
+    yum:
+      name: hashicorp.repo
+      baseurl: https://rpm.releases.hashicorp.com/AmazonLinux/hashicorp.repo
+ 
+  - name: install terraform
+    yum:
+      name: terraform
+      state: latest
