@@ -140,13 +140,15 @@ resource "null_resource" "name" {
     ]
   }
   
-
   # wait for ec2 to be created
   depends_on = [aws_instance.jenkins_instance]
 }
 
 
-# print the url of the jenkins server
-output "website_url" {
+# print the url of the servers
+output "jenkins_url" {
   value     = join ("", ["http://", aws_instance.jenkins_instance.public_dns, ":", "8080"])
+}
+output "sonarqb_url" {
+  value     = join ("", ["http://", aws_instance.jenkins_instance.public_dns, ":", "9000"])
 }

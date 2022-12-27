@@ -1,23 +1,14 @@
 #!/bin/bash
-sudo apt-get update
+# Ensure that the local system package repository is updated
+sudo apt update
 #Install docker
-#sudo apt install apt-transport-https ca-certificates curl software-properties-common -y
-#Enable docker service at AMI boot time:
-#curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-#Start the Docker service:
-#sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable"
-
-#apt-cache policy docker-ce
-
-#sudo apt install docker-ce -y
-
-
-#Install git in your EC2 instance
-#sudo apt install git -y
-#Check git version
-#git --version
-#initialize git local repository
-#git init
+sudo apt install docker.io -y
+#Install Dependencies
+sudo snap install docker
+# Install docker-compose
+sudo curl -L "https://github.com/docker/compose/releases/download/1.29.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+# Change file mode
+sudo chmod +x /usr/local/bin/docker-compose
 
 
 #Install trivy 
