@@ -102,9 +102,9 @@ resource "aws_route_table_association" "jenkins_route_table_association" {
 }
 
 # use data source to get a registered amazon linux 2 ami
-data "aws_ami" "ubuntu" {
+data "aws_ami" "ub" {
   most_recent = true
-  owners      = ["Canonical"]
+  owners      = ["amazon"]
   
   filter {
     name   = "virtualization-type"
