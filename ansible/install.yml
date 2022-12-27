@@ -45,7 +45,6 @@
 - name: install trivy
   hosts: jenkins-server
   become: yes
-  become_user: root
   tasks:
   - name: add the trivy repo
     get_url:
