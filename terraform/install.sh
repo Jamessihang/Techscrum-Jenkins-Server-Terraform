@@ -1,44 +1,39 @@
 #!/bin/bash
-sudo yum update –y
-#Search for Docker package:
-sudo yum search docker
-#Get version information:
-sudo yum info docker
+sudo apt-get update
 #Install docker
-sudo yum install docker -y
-# If need docker-compose too:
-# 1. Get pip3 
-#sudo yum install python3-pip
- # 2. Then run any one of the following
-#sudo pip3 install docker-compose # with root access
+#sudo apt install apt-transport-https ca-certificates curl software-properties-common -y
 #Enable docker service at AMI boot time:
-sudo systemctl enable docker.service
+#curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
 #Start the Docker service:
-sudo systemctl start docker.service
+#sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable"
 
-#Install yum-config-manager to manage your repositories.
-#sudo yum install -y yum-utils
-#Use yum-config-manager to add the official HashiCorp Linux repository.
-#sudo yum-config-manager --add-repo https://rpm.releases.hashicorp.com/AmazonLinux/hashicorp.repo
-#Install Terraform from the new repository.
-#sudo yum -y install terraform
+#apt-cache policy docker-ce
+
+#sudo apt install docker-ce -y
+
 
 #Install git in your EC2 instance
-sudo yum install git -y
+#sudo apt install git -y
 #Check git version
-git version
+#git --version
 #initialize git local repository
-git init
+#git init
 
-#Install trivy
-#curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh -s -- -b /usr/local/bin v0.18.3
+
+#Install trivy 
+wget https://github.com/aquasecurity/trivy/releases/download/v0.18.3/trivy_0.18.3_Linux-64bit.deb
+sudo dpkg -i trivy_0.18.3_Linux-64bit.deb
+
 
 #Install Jenkins
-sudo wget -O /etc/yum.repos.d/jenkins.repo https://pkg.jenkins.io/redhat-stable/jenkins.repo
-sudo rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io.key
-sudo yum upgrade -y
-sudo amazon-linux-extras install java-openjdk11 -y
-sudo yum install jenkins -y
+sudo apt install openjdk-11-jre -y
+curl -fsSL https://pkg.jenkins.io/debian-stable/jenkins.io.key | sudo tee \
+  /usr/share/keyrings/jenkins-keyring.asc > /dev/null
+echo deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc] \
+  https://pkg.jenkins.io/debian-stable binary/ | sudo tee \
+  /etc/apt/sources.list.d/jenkins.list > /dev/null
+sudo apt-get update
+sudo apt-get install jenkins -y
 sudo systemctl enable jenkins
 sudo systemctl start jenkins
 sudo cat /var/lib/jenkins/secrets/initialAdminPassword

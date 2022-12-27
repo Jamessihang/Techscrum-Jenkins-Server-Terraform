@@ -101,25 +101,9 @@ resource "aws_route_table_association" "jenkins_route_table_association" {
   route_table_id      = aws_route_table.jenkins_public_route_table.id
 }
 
-# use data source to get a registered amazon linux 2 ami
-data "aws_ami" "amazon_linux_2" {
-  most_recent = true
-  owners      = ["amazon"]
-  
-  filter {
-    name   = "owner-alias"
-    values = ["amazon"]
-  }
-
-  filter {
-    name   = "name"
-    values = ["amzn2-ami-hvm*"]
-  }
-}
-
 # launch the ec2 instance
 resource "aws_instance" "jenkins_instance" {
-  ami                    = data.aws_ami.amazon_linux_2.id
+  ami                    = "ami-0df609f69029c9bdb"
   instance_type          = "t2.micro"
   subnet_id              = aws_default_subnet.default_az1.id
   vpc_security_group_ids = [aws_security_group.jenkins_security_group.id]
@@ -142,7 +126,7 @@ resource "null_resource" "name" {
     host        = aws_instance.jenkins_instance.public_ip
   }
 
-  # copy the install.sh file from your computer to the ec2 instance 
+ # copy the install.sh file from your computer to the ec2 instance 
   provisioner "file" {
     source      = "install.sh"
     destination = "/tmp/install.sh"
@@ -155,6 +139,7 @@ resource "null_resource" "name" {
       "sh /tmp/install.sh",
     ]
   }
+  
 
   # wait for ec2 to be created
   depends_on = [aws_instance.jenkins_instance]

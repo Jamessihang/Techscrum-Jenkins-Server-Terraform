@@ -3,7 +3,7 @@ Use terraform code
 
 # Update the installed packages and package cache on your instance.
 
-sudo yum update -y
+sudo apt update -y
 
 # Install the most recent Docker Engine package.
 
