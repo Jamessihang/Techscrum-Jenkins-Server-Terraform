@@ -5,23 +5,29 @@ If you need Terraform and Ansible to generate multiple servers, please use the t
 # How to use docker compose to generate a SonarQube Server
 # EC2 instance with Ubuntu ami at least t2.small
 # Port 9000 is open in security group
-# Ensure that the local system package repository is updated
-sudo apt update
+# install docker
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
 
-# Install docker
-sudo apt install docker.io -y
+sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
 
-# Install Dependencies
-sudo snap install docker
+sudo apt-get update
 
-# Add current user to docker group
+apt-cache policy docker-ce
+
+sudo apt-get install -y docker-ce
+
 sudo usermod -aG docker ubuntu
 
-# Install docker-compose
-sudo curl -L "https://github.com/docker/compose/releases/download/1.29.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+sudo systemctl status docker
+
+# install docker compose
+sudo curl -L "https://github.com/docker/compose/releases/download/1.24.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 
 # Change file mode
 sudo chmod +x /usr/local/bin/docker-compose
+
+# Check docker-compose version
+docker-compose --version
 
 # Run these command in your terminal
 sudo sysctl -w vm.max_map_count=262144
@@ -34,7 +40,7 @@ sudo vi docker-compose.yml
 # Save the file :wq!
 
 # Execute the compose file with command
-sudo docker-compose up -d
+sudo docker-compose up 
 
 # Make sure is up and running
 sudo docker-compose logs --follow
