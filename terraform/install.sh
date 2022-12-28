@@ -10,7 +10,9 @@ apt-cache policy docker-ce
 
 sudo apt-get install -y docker-ce
 
-sudo usermod -aG docker ubuntu
+sudo service docker start
+
+sudo usermod -a -G docker ubuntu
 
 sudo systemctl status docker
 
@@ -44,5 +46,11 @@ sudo apt-get install jenkins -y
 sudo systemctl enable jenkins
 
 sudo systemctl start jenkins
+
+sudo usermod -a -G docker jenkins
+
+sudo systemctl daemon-reload
+
+sudo service docker restart
 
 sudo cat /var/lib/jenkins/secrets/initialAdminPassword
