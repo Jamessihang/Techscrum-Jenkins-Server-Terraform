@@ -17,6 +17,8 @@
 
 #sudo usermod -a -G docker jenkins
 
+#sudo service jenkins restart
+
 #sudo systemctl daemon-reload
 
 #sudo service docker restart
@@ -28,6 +30,8 @@
 # Change file mode
 #sudo chmod +x /usr/local/bin/docker-compose
 
+#Install aws cli
+sudo apt  install awscli
 
 #Install trivy 
 wget https://github.com/aquasecurity/trivy/releases/download/v0.18.3/trivy_0.18.3_Linux-64bit.deb

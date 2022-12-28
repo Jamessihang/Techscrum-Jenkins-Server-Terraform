@@ -37,7 +37,7 @@ sudo vi docker-compose.yml
 
 # Copy all the content in docker-compose.yml 
 
-# Save the file :wq!
+# Save the file :wq
 
 # Execute the compose file with command
 sudo docker-compose up 
