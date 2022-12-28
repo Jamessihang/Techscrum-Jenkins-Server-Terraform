@@ -1,20 +1,27 @@
 #!/bin/bash
 #install docker
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
 
-sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+#curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
 
-sudo apt-get update
+#sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
 
-apt-cache policy docker-ce
+#sudo apt-get update
 
-sudo apt-get install -y docker-ce
+#apt-cache policy docker-ce
 
-sudo service docker start
+#sudo apt-get install -y docker-ce
 
-sudo usermod -a -G docker ubuntu
+#sudo service docker start
 
-sudo systemctl status docker
+#sudo usermod -a -G docker ubuntu
+
+#sudo usermod -a -G docker jenkins
+
+#sudo systemctl daemon-reload
+
+#sudo service docker restart
+
+#sudo systemctl status docker
 
 # Install docker-compose
 #sudo curl -L "https://github.com/docker/compose/releases/download/1.29.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
@@ -46,11 +53,5 @@ sudo apt-get install jenkins -y
 sudo systemctl enable jenkins
 
 sudo systemctl start jenkins
-
-sudo usermod -a -G docker jenkins
-
-sudo systemctl daemon-reload
-
-sudo service docker restart
 
 sudo cat /var/lib/jenkins/secrets/initialAdminPassword
