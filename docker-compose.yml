@@ -1,8 +1,7 @@
-version: "3.3"
+version: "3"
 services:
   sonarqube:
-    image: sonarqube:lts-community
-    hostname: sonarqube
+    image: sonarqube:community
     container_name: sonarqube
     restart: unless-stopped
     depends_on:
@@ -15,21 +14,24 @@ services:
       - sonarqube_data:/opt/sonarqube/data
       - sonarqube_extensions:/opt/sonarqube/extensions
       - sonarqube_logs:/opt/sonarqube/logs
+    networks:
+      - sonarqube-net
     ports:
       - "9000:9000"
   db:
-    image: postgres:13
-    hostname: postgresql
+    image: postgres:12
     container_name: postgresql
     restart: unless-stopped
     environment:
       POSTGRES_USER: sonar
       POSTGRES_PASSWORD: sonar
-      POSTGRES_DB: sonar
     volumes:
       - postgresql:/var/lib/postgresql
       - postgresql_data:/var/lib/postgresql/data
-
+    networks:
+      - sonarqube-net
+networks:
+  sonarqube-net:
 volumes:
   sonarqube_data:
   sonarqube_extensions:

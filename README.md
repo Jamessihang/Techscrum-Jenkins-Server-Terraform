@@ -6,11 +6,11 @@ If you need Terraform and Ansible to generate multiple servers, please use the t
 # EC2 instance with Ubuntu ami at least t2.small
 # Port 9000 is open in security group
 
-sudo vi /etc/sysctl.conf
-
-# Add following to the bottom of that file
-vm.max_map_count=262144
-fs.file-max=65536
+# Run these command in your terminal
+sysctl -w vm.max_map_count=524288
+sysctl -w fs.file-max=131072
+ulimit -n 131072
+ulimit -u 8192
 
 # To make changes are getting into effect
 sudo sysctl -p

@@ -117,7 +117,7 @@ resource "aws_instance" "jenkins_instance" {
 
 resource "aws_instance" "sonarqube_instance" {
   ami                    = "ami-0df609f69029c9bdb"
-  instance_type          = "t3.small"
+  instance_type          = "t2.small"
   subnet_id              = aws_default_subnet.default_az1.id
   vpc_security_group_ids = [aws_security_group.jenkins_security_group.id]
   key_name               = "Jenkins_key"
