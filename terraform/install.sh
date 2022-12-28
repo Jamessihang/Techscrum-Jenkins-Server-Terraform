@@ -31,7 +31,7 @@
 #sudo chmod +x /usr/local/bin/docker-compose
 
 #Install aws cli
-sudo apt  install awscli
+#sudo apt  install awscli
 
 #Install trivy 
 wget https://github.com/aquasecurity/trivy/releases/download/v0.18.3/trivy_0.18.3_Linux-64bit.deb

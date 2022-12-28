@@ -1,11 +1,13 @@
 # Techscrum-Server
 If you need one server for testing, you can Use terraform code in terraform folder.
+Check out install.sh to install docker and aws cli manually.
+
 If you need Terraform and Ansible to generate multiple servers, please use the terraform code in root directory.
 
 # How to use docker compose to generate a SonarQube Server
 # EC2 instance with Ubuntu ami at least t2.small
 # Port 9000 is open in security group
-# install docker
+# Install docker
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
 
 sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
@@ -20,7 +22,7 @@ sudo usermod -a -G docker ubuntu
 
 sudo systemctl status docker
 
-# install docker compose
+# Install docker compose
 sudo curl -L "https://github.com/docker/compose/releases/download/1.24.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 
 # Change file mode
